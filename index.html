@@ -65,6 +65,9 @@
       <h6 style="margin:0%" for="sat-slider">Rotate Satellites:</h6>
       <input type="range" id="sat-slider" step="15" min="0" max="180" value="0" />
 
+      <h6 style="margin:0%" for="sat-size">Size Satellites:</h6>
+      <input type="range" id="sat-size" min="1" max="100" value="50" />
+
       <h6 style="margin:0%" for="axis-slider">Rotate Axes:</h6>
       <input type="range" id="axis-slider" step="15" min="0" max="360" value="0" />
 
@@ -97,7 +100,8 @@
       const heightSlider = document.getElementById('height-slider');
       const borderSlider = document.getElementById('border-slider');
       const ellipses = document.querySelectorAll('.ellipse');
-      const boxSlider = document.getElementById('sat-slider');
+      const satSlider = document.getElementById('sat-slider');
+      const satSize = document.getElementById('sat-size');
       const axisSlider = document.getElementById("axis-slider");
       const axisImage = document.querySelector(".image");
       const axisSize = document.getElementById('axis-size');
@@ -115,10 +119,21 @@
         });
       });
 
-      boxSlider.addEventListener('input', () => {
-        const rotationAngle = boxSlider.value;
+      satSlider.addEventListener('input', () => {
+        const rotationAngle = satSlider.value;
         boxes.forEach(box => {
           box.style.transform = `translate(-50%, -50%) rotate(${rotationAngle}deg)`;
+        });
+      });
+
+      satSize.addEventListener('input', () => {
+        const sizeValue = satSize.value;
+
+        // update the boxes size while maintaining aspect ratio
+        boxes.forEach(box => {
+          box.style.transform = `translate(-50%, -50%)`;
+          box.style.width = `${sizeValue}px`;
+          box.style.height = `${sizeValue}px`;
         });
       });
 
@@ -134,7 +149,6 @@
         axisImage.style.width = `${sizeValue}px`;
         axisImage.style.height = 'auto';
       });
-
 
       function changeImage() {
         var image = document.getElementById("axis-fig");
